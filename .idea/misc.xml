@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/drawable-anydpi/add.xml" value="0.18020833333333333" />
+        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/drawable-anydpi/check.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/drawable-anydpi/cross.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/drawable/navigation.xml" value="0.19583333333333333" />
+        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/activity_edit_employee.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/activity_main.xml" value="0.2682926829268293" />
-        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/fragment_employee.xml" value="0.4703703703703704" />
+        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/employee_list_row.xml" value="0.12" />
+        <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/fragment_employee.xml" value="0.14312796208530806" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/fragment_project.xml" value="0.17844202898550723" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/fragment_user.xml" value="0.17844202898550723" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/toolbar.xml" value="0.17481884057971014" />
