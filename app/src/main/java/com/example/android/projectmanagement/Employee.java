@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -105,17 +108,13 @@ public class Employee extends Fragment {
         databaseHelper=new DatabaseHelper(getActivity());
         employeeSQLlist.addAll(databaseHelper.getAlLEmployee());
 
-        Log.d("run","come 1");
+
 
         employeeAdapter= new EmployeeAdapter(getActivity(),employeeSQLlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity().getApplicationContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapter(employeeAdapter);
-        Log.d("run","come 2");
-
-
         return view;
     }
 
@@ -125,6 +124,8 @@ public class Employee extends Fragment {
         if ( requestCode==EDIT_ACTIVITY){
             if(resultCode== Activity.RESULT_OK){
                 if (data.getBooleanExtra("success",false)){
+                    employeeSQLlist.clear();
+                    employeeSQLlist.addAll(databaseHelper.getAlLEmployee());
                     employeeAdapter.notifyDataSetChanged();
                 }
             }

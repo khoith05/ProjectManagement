@@ -1,6 +1,8 @@
 package com.example.android.projectmanagement.database;
 
-public class EmployeeSQL {
+import java.io.Serializable;
+
+public class EmployeeSQL implements Serializable {
     public static final String TABLE_NAME="employee";
     public static final String COLUMN_ID ="ID";
     public static final String COLUMN_NAME="Name";
