@@ -1,19 +1,21 @@
 package com.example.android.projectmanagement;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Employee#newInstance} factory method to
+ * Use the {@link OnboardingFragment3#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Employee extends Fragment {
+public class OnboardingFragment3 extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class Employee extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Employee() {
+    public OnboardingFragment3() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class Employee extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Employee.
+     * @return A new instance of fragment OnboardingFragment0.
      */
     // TODO: Rename and change types and number of parameters
-    public static Employee newInstance(String param1, String param2) {
-        Employee fragment = new Employee();
+    public static OnboardingFragment3 newInstance(String param1, String param2) {
+        OnboardingFragment3 fragment = new OnboardingFragment3();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,11 +57,24 @@ public class Employee extends Fragment {
         }
     }
 
+    Button btnStarted;
+    View mView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Employee");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_employee, container, false);
+
+        mView = inflater.inflate(R.layout.fragment_onboarding3, container, false);
+        btnStarted = mView.findViewById(R.id.buttonLetstarted);
+        btnStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Login.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        return mView;
     }
 }
