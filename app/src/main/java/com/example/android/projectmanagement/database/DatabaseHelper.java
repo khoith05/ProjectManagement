@@ -6,13 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.sql.SQLClientInfoException;
+import com.example.android.projectmanagement.User;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.android.projectmanagement.EditEmployee;
-import com.example.android.projectmanagement.Employee;
-import com.example.android.projectmanagement.database.EmployeeSQL;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION=1;
@@ -25,11 +22,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(EmployeeSQL.CREATE_TABLE);
+        sqLiteDatabase.execSQL(UserSQL.CREATE_TABLE);
+        insertUser(UserSQL.id,sqLiteDatabase);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+EmployeeSQL.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+UserSQL.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
     public long insertEmployee(String name,String phone,String email,String job,String address,String salary,byte[] img){
@@ -48,6 +48,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return id;
 
     }
+    public long insertUser(Long id, SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+        values.put(UserSQL.COLUMN_ID, id);
+        values.put(UserSQL.COLUMN_NAME, "");
+        values.put(UserSQL.COLUMN_PHONE, "");
+        values.put(UserSQL.COLUMN_EMAIL, "");
+        values.put(UserSQL.COLUMN_ADDRESS, "");
+        values.put(UserSQL.COLUMN_IMG, "");
+        long newRowId = db.insert(UserSQL.TABLE_NAME, null, values);
+        return id;
+    }
+
     public EmployeeSQL getEmpoloyee(long id){
         SQLiteDatabase sqLiteDatabase=this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(EmployeeSQL.TABLE_NAME,
@@ -68,6 +80,50 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cursor.close();
         return employeeSQL;
     }
+
+    public UserSQL getUser(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                UserSQL.COLUMN_ID,
+                UserSQL.COLUMN_NAME,
+                UserSQL.COLUMN_PHONE,
+                UserSQL.COLUMN_EMAIL,
+                UserSQL.COLUMN_ADDRESS,
+                UserSQL.COLUMN_IMG
+        };
+        String selection = UserSQL.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(UserSQL.id)};
+        Cursor cursor = db.query(
+                UserSQL.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null
+        );
+
+        List<UserSQL> list_user = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            long itemId = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(UserSQL.COLUMN_ID));
+            String itemName = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserSQL.COLUMN_NAME));
+            String itemPhone = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserSQL.COLUMN_PHONE));
+            String itemEmail = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserSQL.COLUMN_EMAIL));
+            String itemAddress = cursor.getString(
+                    cursor.getColumnIndexOrThrow(UserSQL.COLUMN_ADDRESS));
+            byte[] itemImage = cursor.getBlob(
+                    cursor.getColumnIndexOrThrow(UserSQL.COLUMN_IMG));
+            list_user.add(new UserSQL(itemId, itemName, itemPhone, itemEmail, itemAddress, itemImage));
+        }
+        cursor.close();
+        return list_user.get(0);
+    }
+
     public List<EmployeeSQL> getAlLEmployee(){
         List<EmployeeSQL> employeeSQLList=new ArrayList<>();
         String selectQuery = "SELECT * FROM "+ EmployeeSQL.TABLE_NAME+ " ORDER BY "+EmployeeSQL.COLUMN_ID +" ASC;";

@@ -1,5 +1,6 @@
 package com.example.android.projectmanagement;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.android.projectmanagement.database.DatabaseHelper;
+import com.example.android.projectmanagement.database.UserSQL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +65,27 @@ public class User extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle("User");
+        View view= inflater.inflate(R.layout.fragment_user, container, false);
+        ImageView imageView= view.findViewById(R.id.editUser);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),UserEdit.class);
+                startActivity(intent);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        DatabaseHelper user = new DatabaseHelper(getActivity());
+        UserSQL usersql = user.getUser();
+        TextView textView = view.findViewById(R.id.UserName);
+        textView.setText(usersql.name);
+        TextView textView1 = view.findViewById(R.id.UserPhoneNumber);
+        textView1.setText(usersql.phone);
+        TextView textView2 = view.findViewById(R.id.UserEmail);
+        textView2.setText(usersql.email);
+        TextView textView3 = view.findViewById(R.id.UserAddress);
+        textView3.setText(usersql.address);
+        return view;
+
     }
 }
