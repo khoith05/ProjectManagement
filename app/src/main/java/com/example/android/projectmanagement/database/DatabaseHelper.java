@@ -159,7 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         int count =sqLiteDatabase.update(userSQL.TABLE_NAME,values,selection,SelectionArgs);
         sqLiteDatabase.close();
-        Log.d("rundebug",String.valueOf(count));
+//        Log.d("rundebug",String.valueOf(count));
         return count;
 
     }
