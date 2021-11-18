@@ -70,10 +70,10 @@
                 app:cardCornerRadius="250dp">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/EmployeeInfoAvatar"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/ic_launcher_background" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -112,7 +112,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/phoneTitleEI"
+                    android:layout_below="@id/phoneEI"
                     android:layout_marginTop="20dp"
                     android:text="Email:" />
 
@@ -131,7 +131,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/emailTitleEI"
+                    android:layout_below="@id/emailEI"
                     android:layout_marginTop="20dp"
                     android:text="Công việc:" />
 
@@ -140,7 +140,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/emailTitleEI"
+                    android:layout_below="@id/emailEI"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/jobTitleEI"
                     android:text="Thiết kế UI" />
@@ -150,7 +150,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/jobTitleEI"
+                    android:layout_below="@id/jobEI"
                     android:layout_marginTop="20dp"
                     android:text="Địa chỉ:" />
 
@@ -159,7 +159,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/jobTitleEI"
+                    android:layout_below="@id/jobEI"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/addressTitleEI"
                     android:text="Hồ Chí Minh" />
@@ -169,7 +169,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/addressTitleEI"
+                    android:layout_below="@id/addressEI"
                     android:layout_marginTop="20dp"
                     android:text="Lương:" />
 
@@ -178,7 +178,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/addressTitleEI"
+                    android:layout_below="@id/addressEI"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/salaryTitleEI"
                     android:text="100" />

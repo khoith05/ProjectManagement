@@ -97,7 +97,7 @@ public class Employee extends Fragment {
                 boolean edit=false;
                 Intent intent =new Intent(getActivity(), EditEmployee.class );
                 intent.putExtra("edit",edit);
-                startActivityForResult(intent,3);
+                startActivityForResult(intent,EDIT_ACTIVITY);
             }
         });
         // Inflate the layout for this fragment
@@ -123,12 +123,20 @@ public class Employee extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if ( requestCode==EDIT_ACTIVITY){
             if(resultCode== Activity.RESULT_OK){
-                if (data.getBooleanExtra("success",false)){
+                if (data.getBooleanExtra("success",true)){
                     employeeSQLlist.clear();
                     employeeSQLlist.addAll(databaseHelper.getAlLEmployee());
                     employeeAdapter.notifyDataSetChanged();
                 }
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        employeeSQLlist.clear();
+        employeeSQLlist.addAll(databaseHelper.getAlLEmployee());
+        employeeAdapter.notifyDataSetChanged();
     }
 }

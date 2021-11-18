@@ -2,6 +2,8 @@ package com.example.android.projectmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,10 @@ public class EmployeeInfo extends AppCompatActivity {
             return;
         }
         EmployeeSQL employeeSQL= (EmployeeSQL) bundle.get("data");
+//        ImageView avatar =findViewById(R.id.EmployeeInfoAvatar);
+//        Bitmap bitmap = BitmapFactory.decodeByteArray(employeeSQL.img,0 ,employeeSQL.img.length);
+//        avatar.setImageBitmap(bitmap);
+
         TextView textView;
         textView =findViewById(R.id.nameEI);
         textView.setText(employeeSQL.name);

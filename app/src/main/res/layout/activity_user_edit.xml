@@ -2,39 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".EditEmployee">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/EditEmployeeToolbar"
+                android:id="@+id/EditUserToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/design_default_color_primary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:titleTextColor="#ffff" >
+                app:titleTextColor="#ffff">
+
                 <TextView
-                    android:id="@+id/EditEmployeeTitle"
+                    android:id="@+id/EditUserTitle"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chỉnh sửa tài khoản"
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:textColor="#ffffff"
                     android:layout_gravity="center"
-                    />
+                    android:text="Chỉnh sửa tài khoản"
+                    android:textColor="#ffffff" />
             </androidx.appcompat.widget.Toolbar>
 
             <ImageView
@@ -42,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:clickable="true"
-                android:contentDescription="backEmployee"
+                android:contentDescription="backUser"
                 android:focusable="auto"
                 android:minWidth="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -56,124 +58,146 @@
                 android:layout_height="48dp"
                 android:layout_marginEnd="9dp"
                 android:clickable="true"
+                android:contentDescription="checkUser"
                 android:focusable="auto"
                 android:minWidth="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/EditEmployeeToolbar"
+                app:layout_constraintEnd_toEndOf="@+id/EditUserToolbar"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="checkEmployee"
                 app:srcCompat="@drawable/check" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
-    <RelativeLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/avartaEmployee"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            app:cardCornerRadius="250dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/avartaEmployee"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    app:cardBackgroundColor="@color/design_default_color_primary"
+                    app:cardCornerRadius="250dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/AvatarUserEdit"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher_background"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/uploadImageEmployee"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@id/avartaEmployee"
+                    android:text="Tải ảnh từ máy" />
+
+                <Button
+                    android:id="@+id/deleteImageEmployee"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/uploadImageEmployee"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@id/avartaEmployee"
+                    android:text="Xóa ảnh" />
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="40dp"
+                android:hint="Họ và tên">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserName"
+                    android:layout_width="match_parent"
+                    android:text="Lê Văn Hải"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:hint="Số điện thoại">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserPhone"
+                    android:layout_width="match_parent"
+                    android:text="0334525878"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:hint="Email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserEmail"
+                    android:layout_width="match_parent"
+                    android:text="haivan@gmail.com"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:hint="Địa chỉ">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/UserAddress"
+                    android:layout_width="match_parent"
+                    android:text="Nghệ An"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                tools:srcCompat="@tools:sample/avatars" />
-        </androidx.cardview.widget.CardView>
-        <Button
-            android:id="@+id/uploadImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tải ảnh từ máy"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@id/avartaEmployee"
-            style="?attr/materialButtonOutlinedStyle"/>
-
-        <Button
-            android:id="@+id/deleteImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xóa ảnh"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@id/avartaEmployee"
-            android:layout_below="@id/uploadImage"
-            style="?attr/materialButtonOutlinedStyle"/>
-    </RelativeLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="30dp"
-        android:hint="Họ và tên"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/UserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nguyễn Văn Hải"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp"
-        android:hint="Số điện thoại"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/UserPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0334525878"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp"
-        android:hint="Email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/UserEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="haivan@gmail.com"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp"
-        android:hint="Địa chỉ"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/UserAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nghệ An"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
+                android:id="@+id/avatar2"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
 

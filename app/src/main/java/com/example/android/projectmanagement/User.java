@@ -75,16 +75,16 @@ public class User extends Fragment {
             }
         });
         // Inflate the layout for this fragment
-        DatabaseHelper user = new DatabaseHelper(getActivity());
-        UserSQL usersql = user.getUser();
-        TextView textView = view.findViewById(R.id.UserName);
-        textView.setText(usersql.name);
-        TextView textView1 = view.findViewById(R.id.UserPhoneNumber);
-        textView1.setText(usersql.phone);
-        TextView textView2 = view.findViewById(R.id.UserEmail);
-        textView2.setText(usersql.email);
-        TextView textView3 = view.findViewById(R.id.UserAddress);
-        textView3.setText(usersql.address);
+//        DatabaseHelper user = new DatabaseHelper(getActivity());
+//        UserSQL usersql = user.getUser();
+//        TextView textView = view.findViewById(R.id.UserName);
+//        textView.setText(usersql.name);
+//        TextView textView1 = view.findViewById(R.id.UserPhoneNumber);
+//        textView1.setText(usersql.phone);
+//        TextView textView2 = view.findViewById(R.id.UserEmail);
+//        textView2.setText(usersql.email);
+//        TextView textView3 = view.findViewById(R.id.UserAddress);
+//        textView3.setText(usersql.address);
         return view;
 
     }
