@@ -3,13 +3,13 @@
     <item
         android:id="@+id/project"
         android:title="Project"
-        android:icon="@mipmap/project"/>
+        android:icon="@drawable/project"/>
     <item
         android:id="@+id/employee"
         android:title="Employee"
-        android:icon="@mipmap/employee"/>
+        android:icon="@drawable/employee"/>
     <item
         android:id="@+id/user"
         android:title="User"
-        android:icon="@mipmap/user"/>
+        android:icon="@drawable/user"/>
 </menu>
