@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectManagement">
         <activity
+            android:name=".EditUser"
+            android:exported="false" />
+        <activity
             android:name=".EditEmployee"
             android:exported="false" />
         <activity
