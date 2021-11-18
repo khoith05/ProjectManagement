@@ -2,6 +2,8 @@ package com.example.android.projectmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -9,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import java.io.*;
 
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.user);
 
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 
     }
 

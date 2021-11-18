@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
@@ -87,5 +88,34 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
         sqLiteDatabase.close();
         return employeeSQLList;
+    }
+    public int updateEmployee(EmployeeSQL employeeSQL){
+        ContentValues values=new ContentValues();
+        values.put(EmployeeSQL.COLUMN_NAME,employeeSQL.name);
+        values.put(EmployeeSQL.COLUMN_PHONE,employeeSQL.phone);
+        values.put(EmployeeSQL.COLUMN_EMAIL,employeeSQL.email);
+        values.put(EmployeeSQL.COLUMN_ADDRESS,employeeSQL.address);
+        values.put(EmployeeSQL.COLUMN_JOB,employeeSQL.job);
+        values.put(EmployeeSQL.COLUMN_SALARY,employeeSQL.salary);
+        values.put(EmployeeSQL.COLUMN_IMG,employeeSQL.img);
+
+        String selection=EmployeeSQL.COLUMN_ID +" LIKE ?";
+        String[] SelectionArgs= {String.valueOf(employeeSQL.id)};
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int count =sqLiteDatabase.update(EmployeeSQL.TABLE_NAME,values,selection,SelectionArgs);
+        sqLiteDatabase.close();
+        Log.d("rundebug",String.valueOf(count));
+        return count;
+
+
+    }
+    public int deleteEmployee(long id){
+        String selection = EmployeeSQL.COLUMN_ID +" LIKE ?";
+        String[] SelectionArgs = {String.valueOf(id)};
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase();
+        int count = sqLiteDatabase.delete(EmployeeSQL.TABLE_NAME,selection,SelectionArgs);
+        sqLiteDatabase.close();
+        return count;
     }
 }

@@ -28,6 +28,15 @@
         android:layout_toRightOf="@id/EmployCardView"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
+        android:text="Lê Văn A"
         style="@style/TextAppearance.MaterialComponents.Headline6"/>
-
+    <ImageView
+        android:id="@+id/kebabEmployee"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="auto"
+        android:contentDescription="backEmployee"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/kebab"/>
 </RelativeLayout>

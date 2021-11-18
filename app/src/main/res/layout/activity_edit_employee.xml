@@ -85,23 +85,25 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/avartaEmployee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp"
+                    app:cardBackgroundColor="@color/design_default_color_primary"
                     app:cardCornerRadius="250dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:cardElevation="0dp">
 
                     <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:id="@+id/AvatarEmployeeEdit"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_launcher_background"/>
+
                 </androidx.cardview.widget.CardView>
 
                 <Button
-                    android:id="@+id/uploadImage"
+                    android:id="@+id/uploadImageEmployee"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,11 +113,11 @@
                     android:text="Tải ảnh từ máy" />
 
                 <Button
-                    android:id="@+id/deleteImage"
+                    android:id="@+id/deleteImageEmployee"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/uploadImage"
+                    android:layout_below="@id/uploadImageEmployee"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@id/avartaEmployee"
@@ -217,6 +219,12 @@
                     android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/avatar2"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                tools:visibility="visible" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
