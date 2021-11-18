@@ -144,4 +144,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.close();
         return employeeSQLList;
     }
+
+    public int updateUser(UserSQL userSQL){
+        ContentValues values=new ContentValues();
+        values.put(EmployeeSQL.COLUMN_NAME,userSQL.name);
+        values.put(EmployeeSQL.COLUMN_PHONE,userSQL.phone);
+        values.put(EmployeeSQL.COLUMN_EMAIL,userSQL.email);
+        values.put(EmployeeSQL.COLUMN_ADDRESS,userSQL.address);
+        values.put(EmployeeSQL.COLUMN_IMG,userSQL.img);
+
+        String selection=userSQL.COLUMN_ID +" LIKE ?";
+        String[] SelectionArgs= {String.valueOf(userSQL.id)};
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int count =sqLiteDatabase.update(userSQL.TABLE_NAME,values,selection,SelectionArgs);
+        sqLiteDatabase.close();
+        Log.d("rundebug",String.valueOf(count));
+        return count;
+
+    }
 }
