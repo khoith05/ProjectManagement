@@ -1,10 +1,14 @@
 package com.example.android.projectmanagement;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +22,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
 
     private Context context;
     private List<EmployeeSQL> employeeSQLList;
+    private EmployeeItemClickListener employeeItemClickListener;
 
     public EmployeeAdapter(Context context,List<EmployeeSQL> employeeSQLList){
         this.context=context;
@@ -33,9 +38,19 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        EmployeeSQL employeeSQL=employeeSQLList.get(position);
+        final EmployeeSQL employeeSQL=employeeSQLList.get(position);
 
         holder.name.setText(employeeSQL.name);
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(context,EmployeeInfo.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("data",employeeSQL);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 //        holder.img.setImageBitma;
     }
 
@@ -47,10 +62,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
         public ImageView img;
+        public RelativeLayout relativeLayout;
         public MyViewHolder(View view){
             super(view);
             name=view.findViewById(R.id.EmployeeListName);
             img=view.findViewById(R.id.EmployeeListAvarta);
+            relativeLayout=view.findViewById(R.id.employeeLayout);
         }
     }
 
