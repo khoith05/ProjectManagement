@@ -101,8 +101,8 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
                 });
             }
         });
-        Bitmap bitmap=BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
-        holder.img.setImageBitmap(bitmap);
+//        Bitmap bitmap=BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
+//        holder.img.setImageBitmap(bitmap);
     }
 
     @Override
@@ -112,13 +112,13 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
-        public ImageView img;
+//        public ImageView img;
         public RelativeLayout relativeLayout;
         public ImageView menu;
         public MyViewHolder(View view){
             super(view);
             name=view.findViewById(R.id.EmployeeListName);
-            img=view.findViewById(R.id.EmployeeListAvarta);
+//            img=view.findViewById(R.id.EmployeeListAvarta);
             relativeLayout=view.findViewById(R.id.employeeLayout);
             menu=view.findViewById(R.id.kebabEmployee);
         }

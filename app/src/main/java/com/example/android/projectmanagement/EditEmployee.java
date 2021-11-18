@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class EditEmployee extends AppCompatActivity {
     boolean edit;
@@ -84,14 +85,14 @@ public class EditEmployee extends AppCompatActivity {
                     employeeSQL.job=job;
                     employeeSQL.address=address;
                     employeeSQL.salary=salary;
-                    employeeSQL.img=Eimage;
+//                    employeeSQL.img=Eimage;
                     databaseHelper.updateEmployee(employeeSQL);
                     Intent intent= new Intent();
                     intent.putExtra("success",true);
                     setResult(Activity.RESULT_OK,intent);
                     finish();
                 }else{
-                    databaseHelper.insertEmployee(name,phone,email,job,address,salary,Eimage);
+                    databaseHelper.insertEmployee(name,phone,email,job,address,salary,salary.getBytes());
                     Intent intent= new Intent();
                     intent.putExtra("success",true);
                     setResult(Activity.RESULT_OK,intent);
@@ -122,8 +123,8 @@ public class EditEmployee extends AppCompatActivity {
             textInputEditText=(TextInputEditText) findViewById(R.id.EmployeeSalary);
             textInputEditText.setText(employeeSQL.salary);
 
-            Bitmap bitmap= BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
-            imageView.setImageBitmap(bitmap);
+//            Bitmap bitmap= BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
+//            imageView.setImageBitmap(bitmap);
 
             this.title="Chỉnh sửa nhân viên";
         }else{
@@ -151,17 +152,17 @@ public class EditEmployee extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if ( requestCode==PICKFILE_RESULT_CODE){
             if(resultCode== Activity.RESULT_OK){
-                Uri uri=data.getData();
-                try{
-                    InputStream imageStream = getContentResolver().openInputStream(uri);
-                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG,0,byteArrayOutputStream);
-                    Eimage=byteArrayOutputStream.toByteArray();
-                    imageView.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e){
-                    e.printStackTrace();
-                }
+//                Uri uri=data.getData();
+//                try{
+//                    InputStream imageStream = getContentResolver().openInputStream(uri);
+//                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG,0,byteArrayOutputStream);
+//                    Eimage=byteArrayOutputStream.toByteArray();
+//                    imageView.setImageBitmap(bitmap);
+//                } catch (FileNotFoundException e){
+//                    e.printStackTrace();
+//                }
 
 
 
