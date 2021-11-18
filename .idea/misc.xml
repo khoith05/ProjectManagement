@@ -22,6 +22,10 @@
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/fragment_project.xml" value="0.17844202898550723" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/layout/fragment_user.xml" value="0.17844202898550723" />
         <entry key="..\:/AndroidStudioProjects/ProjectManagement/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1796875" />
+        <entry key="..\:/Git/ProjectManagement/app/src/main/res/drawable/custom_input.xml" value="0.2203125" />
+        <entry key="..\:/Git/ProjectManagement/app/src/main/res/drawable/ic_baseline_email.xml" value="0.2203125" />
+        <entry key="..\:/Git/ProjectManagement/app/src/main/res/drawable/ic_lock.xml" value="0.2203125" />
+        <entry key="..\:/Git/ProjectManagement/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Git/ProjectManagement/app/src/main/res/layout/activity_splash.xml" value="0.20416666666666666" />
       </map>
     </option>
