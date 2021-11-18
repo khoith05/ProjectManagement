@@ -38,7 +38,7 @@
             </androidx.appcompat.widget.Toolbar>
 
             <ImageView
-                android:id="@+id/crossEmployee"
+                android:id="@+id/crossUser"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:clickable="true"
@@ -51,7 +51,7 @@
                 app:srcCompat="@drawable/cross" />
 
             <ImageView
-                android:id="@+id/checkEmployee"
+                android:id="@+id/checkUser"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginEnd="9dp"

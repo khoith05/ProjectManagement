@@ -77,8 +77,6 @@ public class EditEmployee extends AppCompatActivity {
             this.title="Thêm nhân viên";
             TextView textView= (TextView) findViewById(R.id.EditEmployeeTitle);
             textView.setText(this.title);
-
         }
-
     }
 }
