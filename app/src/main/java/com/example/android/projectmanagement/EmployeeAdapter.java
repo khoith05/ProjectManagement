@@ -52,9 +52,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(context,EmployeeInfo.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("data",employeeSQL);
-                intent.putExtras(bundle);
+                intent.putExtra("id",employeeSQL.id);
                 context.startActivity(intent);
             }
         });
@@ -71,9 +69,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
                             case R.id.employeeModified:
                                 Intent intent =new Intent(context,EditEmployee.class);
                                 intent.putExtra("edit",true);
-                                Bundle bundle=new Bundle();
-                                bundle.putSerializable("data",employeeSQL);
-                                intent.putExtras(bundle);
+                                intent.putExtra("id",employeeSQL.id);
                                 context.startActivity(intent);
 
                                 return true;
@@ -101,8 +97,8 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
                 });
             }
         });
-//        Bitmap bitmap=BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
-//        holder.img.setImageBitmap(bitmap);
+        Bitmap bitmap=BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
+        holder.img.setImageBitmap(bitmap);
     }
 
     @Override
@@ -112,13 +108,13 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView name;
-//        public ImageView img;
+        public ImageView img;
         public RelativeLayout relativeLayout;
         public ImageView menu;
         public MyViewHolder(View view){
             super(view);
             name=view.findViewById(R.id.EmployeeListName);
-//            img=view.findViewById(R.id.EmployeeListAvarta);
+            img=view.findViewById(R.id.EmployeeListAvarta);
             relativeLayout=view.findViewById(R.id.employeeLayout);
             menu=view.findViewById(R.id.kebabEmployee);
         }

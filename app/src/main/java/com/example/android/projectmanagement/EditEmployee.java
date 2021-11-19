@@ -30,8 +30,9 @@ import java.nio.charset.StandardCharsets;
 
 public class EditEmployee extends AppCompatActivity {
     boolean edit;
+    long id;
     String title="Chỉnh sửa nhân viên";
-    byte[] Eimage;
+    byte[] avatarByte;
     ImageView imageView;
     EmployeeSQL employeeSQL;
     public static final int PICKFILE_RESULT_CODE=123;
@@ -85,14 +86,14 @@ public class EditEmployee extends AppCompatActivity {
                     employeeSQL.job=job;
                     employeeSQL.address=address;
                     employeeSQL.salary=salary;
-//                    employeeSQL.img=Eimage;
+                    employeeSQL.img=avatarByte;
                     databaseHelper.updateEmployee(employeeSQL);
                     Intent intent= new Intent();
                     intent.putExtra("success",true);
                     setResult(Activity.RESULT_OK,intent);
                     finish();
                 }else{
-                    databaseHelper.insertEmployee(name,phone,email,job,address,salary,salary.getBytes());
+                    databaseHelper.insertEmployee(name,phone,email,job,address,salary,avatarByte);
                     Intent intent= new Intent();
                     intent.putExtra("success",true);
                     setResult(Activity.RESULT_OK,intent);
@@ -103,11 +104,12 @@ public class EditEmployee extends AppCompatActivity {
             }
         });
         if (this.edit){
-            Bundle bundle= getIntent().getExtras();
-            if (bundle == null){
-                return;
-            }
-            employeeSQL=(EmployeeSQL) bundle.get("data");
+//            Bundle bundle= getIntent().getExtras();
+//            if (bundle == null){
+//                return;
+//            }
+            id= extras.getLong("id");
+            employeeSQL=(EmployeeSQL) databaseHelper.getEmpoloyee(id);
             TextInputEditText textInputEditText;
 
             textInputEditText=(TextInputEditText) findViewById(R.id.EmployeeName);
@@ -123,8 +125,9 @@ public class EditEmployee extends AppCompatActivity {
             textInputEditText=(TextInputEditText) findViewById(R.id.EmployeeSalary);
             textInputEditText.setText(employeeSQL.salary);
 
-//            Bitmap bitmap= BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
-//            imageView.setImageBitmap(bitmap);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
+            imageView.setImageBitmap(bitmap);
+            avatarByte=employeeSQL.img;
 
             this.title="Chỉnh sửa nhân viên";
         }else{
@@ -146,23 +149,35 @@ public class EditEmployee extends AppCompatActivity {
 
             }
         });
+
+        Button deleteButton= findViewById(R.id.deleteImageEmployee);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageBitmap(null);
+                avatarByte=null;
+            }
+        });
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ( requestCode==PICKFILE_RESULT_CODE){
             if(resultCode== Activity.RESULT_OK){
-//                Uri uri=data.getData();
-//                try{
-//                    InputStream imageStream = getContentResolver().openInputStream(uri);
-//                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.PNG,0,byteArrayOutputStream);
-//                    Eimage=byteArrayOutputStream.toByteArray();
-//                    imageView.setImageBitmap(bitmap);
-//                } catch (FileNotFoundException e){
-//                    e.printStackTrace();
-//                }
+                Uri uri=data.getData();
+                try{
+                    InputStream imageStream = getContentResolver().openInputStream(uri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+                    imageView.setImageBitmap(bitmap);
+
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,0,byteArrayOutputStream);
+                    avatarByte=byteArrayOutputStream.toByteArray();
+                    Log.d("dfgdf","dfgdfgdf");
+                } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
 
 
 

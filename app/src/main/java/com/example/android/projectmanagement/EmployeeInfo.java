@@ -10,24 +10,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.example.android.projectmanagement.database.DatabaseHelper;
 import com.example.android.projectmanagement.database.EmployeeSQL;
 
 public class EmployeeInfo extends AppCompatActivity {
-
+    long id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toolbar toolbar=findViewById(R.id.InfoEmployeeToolbar);
         setActionBar(toolbar);
         setContentView(R.layout.activity_employee_info);
-        Bundle bundle=getIntent().getExtras();
-        if (bundle ==null){
+        Bundle extras= getIntent().getExtras();
+        if (extras ==null){
             return;
         }
-        EmployeeSQL employeeSQL= (EmployeeSQL) bundle.get("data");
-//        ImageView avatar =findViewById(R.id.EmployeeInfoAvatar);
-//        Bitmap bitmap = BitmapFactory.decodeByteArray(employeeSQL.img,0 ,employeeSQL.img.length);
-//        avatar.setImageBitmap(bitmap);
+        id=extras.getLong("id");
+        DatabaseHelper db= new DatabaseHelper(this);
+        EmployeeSQL employeeSQL= (EmployeeSQL) db.getEmpoloyee(id);
+        ImageView avatar =findViewById(R.id.EmployeeInfoAvatar);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(employeeSQL.img,0 ,employeeSQL.img.length);
+        avatar.setImageBitmap(bitmap);
 
         TextView textView;
         textView =findViewById(R.id.nameEI);

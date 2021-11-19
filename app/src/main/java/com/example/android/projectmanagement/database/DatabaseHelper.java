@@ -69,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         if (cursor!=null){
             cursor.moveToFirst();
         }
+
         EmployeeSQL employeeSQL= new EmployeeSQL(cursor.getLong(cursor.getColumnIndex(EmployeeSQL.COLUMN_ID)),
                 cursor.getString(cursor.getColumnIndex(EmployeeSQL.COLUMN_NAME)),
                 cursor.getString(cursor.getColumnIndex(EmployeeSQL.COLUMN_PHONE)),
@@ -163,7 +164,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         int count =sqLiteDatabase.update(EmployeeSQL.TABLE_NAME,values,selection,SelectionArgs);
         sqLiteDatabase.close();
-        Log.d("rundebug",String.valueOf(count));
         return count;
 
 
@@ -182,7 +182,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         int count =sqLiteDatabase.update(UserSQL.TABLE_NAME,values,selection,SelectionArgs);
         sqLiteDatabase.close();
-        Log.d("rundebug",String.valueOf(count));
         return count;
 
 
