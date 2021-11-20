@@ -51,10 +51,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.MyViewHo
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(context,ProjectInfo.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("data",employeeSQL);
-                intent.putExtras(bundle);
+                Intent intent =new Intent(context,Project_info.class);
+                intent.putExtra("id",employeeSQL.id);
                 context.startActivity(intent);
             }
         });

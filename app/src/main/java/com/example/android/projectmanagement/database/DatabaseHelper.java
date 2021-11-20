@@ -22,6 +22,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(EmployeeSQL.CREATE_TABLE);
         sqLiteDatabase.execSQL(UserSQL.CREATE_TABLE);
         sqLiteDatabase.execSQL(ProjectSQL.CREATE_TABLE);
+        sqLiteDatabase.execSQL(TaskSQL.CREATE_TABLE);
+        sqLiteDatabase.execSQL(BelongToSQL.CREATE_TABLE);
+        sqLiteDatabase.execSQL(WorkForSQL.CREATE_TABLE);
         insertUser(UserSQL.id,sqLiteDatabase);
     }
 
@@ -30,6 +33,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+EmployeeSQL.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+UserSQL.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ProjectSQL.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TaskSQL.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+BelongToSQL.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+WorkForSQL.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
     public long insertEmployee(String name,String phone,String email,String job,String address,String salary,byte[] img){
@@ -49,14 +55,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     }
 
-    public long insertProject(String name,String phone,String email,String job,String address){
+    public long insertProject(String name,String des,String start,String end,String state){
         SQLiteDatabase sqLiteDatabase= this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ProjectSQL.COLUMN_NAME,name);
-        values.put(ProjectSQL.COLUMN_DES,phone);
-        values.put(ProjectSQL.COLUMN_START,email);
-        values.put(ProjectSQL.COLUMN_END,job);
-        values.put(ProjectSQL.COLUMN_START,address);
+        values.put(ProjectSQL.COLUMN_DES,des);
+        values.put(ProjectSQL.COLUMN_START,start);
+        values.put(ProjectSQL.COLUMN_END,end);
+        values.put(ProjectSQL.COLUMN_STATE,state);
 
         long id = sqLiteDatabase.insert(ProjectSQL.TABLE_NAME,null,values);
         sqLiteDatabase.close();
@@ -115,6 +121,24 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cursor.close();
         return projectSQL;
     }
+    public int updateUser(UserSQL userSQL){
+        ContentValues values=new ContentValues();
+        values.put(UserSQL.COLUMN_NAME,userSQL.name);
+        values.put(UserSQL.COLUMN_PHONE,userSQL.phone);
+        values.put(UserSQL.COLUMN_EMAIL,userSQL.email);
+        values.put(UserSQL.COLUMN_ADDRESS,userSQL.address);
+        values.put(UserSQL.COLUMN_IMG,userSQL.img);
+
+        String selection=UserSQL.COLUMN_ID +" LIKE ?";
+        String[] SelectionArgs= {String.valueOf(userSQL.id)};
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int count =sqLiteDatabase.update(UserSQL.TABLE_NAME,values,selection,SelectionArgs);
+        sqLiteDatabase.close();
+        return count;
+
+
+    }
 
     public UserSQL getUser(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -162,7 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public List<EmployeeSQL> getAlLEmployee(){
         List<EmployeeSQL> employeeSQLList=new ArrayList<>();
         String selectQuery = "SELECT * FROM "+ EmployeeSQL.TABLE_NAME+ " ORDER BY "+EmployeeSQL.COLUMN_ID +" ASC;";
-        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase=this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
         if (cursor.moveToFirst()){
             do{
@@ -184,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public List<ProjectSQL> getAlLProject(){
         List<ProjectSQL> projectSQLList=new ArrayList<>();
         String selectQuery = "SELECT * FROM "+ ProjectSQL.TABLE_NAME+ " ORDER BY "+ProjectSQL.COLUMN_ID +" ASC;";
-        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase=this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
         if (cursor.moveToFirst()){
             do{
@@ -260,86 +284,141 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.close();
         return count;
     }
-    
-    public long insertProject(String name,String phone,String email,String job,String address){
-        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(ProjectSQL.COLUMN_NAME,name);
-        values.put(ProjectSQL.COLUMN_DES,phone);
-        values.put(ProjectSQL.COLUMN_START,email);
-        values.put(ProjectSQL.COLUMN_END,job);
-        values.put(ProjectSQL.COLUMN_START,address);
 
-        long id = sqLiteDatabase.insert(ProjectSQL.TABLE_NAME,null,values);
-        sqLiteDatabase.close();
-        return id;
+    public List<TaskSQL> getAllTask(long projectid){
+        SQLiteDatabase db = this.getReadableDatabase();
 
-    }
-    
-    public ProjectSQL getProject(long id){
-        SQLiteDatabase sqLiteDatabase=this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(ProjectSQL.TABLE_NAME,
-                new String[]{ProjectSQL.COLUMN_ID,ProjectSQL.COLUMN_NAME,ProjectSQL.COLUMN_DES, ProjectSQL.COLUMN_START,
-                        ProjectSQL.COLUMN_END,ProjectSQL.COLUMN_STATE},ProjectSQL.COLUMN_ID+"=?",
-                new String[]{String.valueOf(id)},null,null,null,null);
-        if (cursor!=null){
-            cursor.moveToFirst();
+        String[] projection = {
+                TaskSQL.COLUMN_ID,
+                TaskSQL.COLUMN_NAME,
+                TaskSQL.COLUMN_START,
+                TaskSQL.COLUMN_END,
+                TaskSQL.COLUMN_DESCRIPTION,
+                TaskSQL.COLUMN_STATE,
+                TaskSQL.COLUMN_PROJECTID
+        };
+
+        String selection = TaskSQL.COLUMN_PROJECTID + " = ?";
+        String[] selectionArgs = { String.valueOf(projectid) };
+
+        String sortOrder =
+                TaskSQL.COLUMN_ID + " ASC";
+
+        Cursor cursor = db.query(
+                TaskSQL.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+        List<TaskSQL> taskSQLList=new ArrayList<>();
+        while(cursor.moveToNext()) {
+            long id = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_ID));
+            String name=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String start=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String end=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String des=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String state=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            Long prjectid= cursor.getLong(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_PROJECTID));
+            taskSQLList.add(new TaskSQL(id,name,start,end,des,state,prjectid));
         }
-        ProjectSQL projectSQL= new ProjectSQL(cursor.getLong(cursor.getColumnIndex(ProjectSQL.COLUMN_ID)),
-                cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_NAME)),
-                cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_DES)),
-                cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_START)),
-                cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_END)),
-                cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_STATE)));
         cursor.close();
-        return projectSQL;
+        return taskSQLList;
     }
-    
-    public List<ProjectSQL> getAlLProject(){
-        List<ProjectSQL> projectSQLList=new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+ ProjectSQL.TABLE_NAME+ " ORDER BY "+ProjectSQL.COLUMN_ID +" ASC;";
-        SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
-        if (cursor.moveToFirst()){
-            do{
-                ProjectSQL projectSQL= new ProjectSQL(cursor.getLong(cursor.getColumnIndex(ProjectSQL.COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_NAME)),
-                        cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_DES)),
-                        cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_START)),
-                        cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_END)),
-                        cursor.getString(cursor.getColumnIndex(ProjectSQL.COLUMN_STATE)));
-                projectSQLList.add(projectSQL);
-            }while (cursor.moveToNext());
+
+    public TaskSQL getTask(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                TaskSQL.COLUMN_ID,
+                TaskSQL.COLUMN_NAME,
+                TaskSQL.COLUMN_START,
+                TaskSQL.COLUMN_END,
+                TaskSQL.COLUMN_DESCRIPTION,
+                TaskSQL.COLUMN_STATE,
+                TaskSQL.COLUMN_PROJECTID
+        };
+
+        String selection = TaskSQL.COLUMN_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+
+        Cursor cursor = db.query(
+                TaskSQL.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        List<TaskSQL> taskSQLList=new ArrayList<>();
+        while(cursor.moveToNext()) {
+            long itemid = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_ID));
+            String name=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String start=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String end=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String des=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String state=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            Long prjectid= cursor.getLong(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_PROJECTID));
+            taskSQLList.add(new TaskSQL(itemid,name,start,end,des,state,prjectid));
         }
-        sqLiteDatabase.close();
-        return projectSQLList;
+        cursor.close();
+        return taskSQLList.get(0);
     }
+
+    public int updateTask(TaskSQL taskSQL){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TaskSQL.COLUMN_NAME, taskSQL.name);
+        values.put(TaskSQL.COLUMN_START, taskSQL.start);
+        values.put(TaskSQL.COLUMN_END, taskSQL.end);
+        values.put(TaskSQL.COLUMN_DESCRIPTION, taskSQL.desciption);
+        values.put(TaskSQL.COLUMN_STATE, taskSQL.state);
+        values.put(TaskSQL.COLUMN_PROJECTID, taskSQL.projectid);
+
+        String selection = TaskSQL.COLUMN_ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(taskSQL.id)};
+
+        int count = db.update(
+                TaskSQL.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        db.close();
+        return count;
+    }
+
+    public int insertTask(String name,String start,String end,String des,String state,long projectid){
+        SQLiteDatabase db =this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TaskSQL.COLUMN_NAME, name);
+        values.put(TaskSQL.COLUMN_START, start);
+        values.put(TaskSQL.COLUMN_END, end);
+        values.put(TaskSQL.COLUMN_DESCRIPTION, des);
+        values.put(TaskSQL.COLUMN_STATE, state);
+        values.put(TaskSQL.COLUMN_PROJECTID, projectid);
+
+        long newRowId = db.insert(TaskSQL.TABLE_NAME, null, values);
+        db.close();
+        return (int)newRowId;
+    }
+    public int deleteTask(long id){
+        SQLiteDatabase db =this.getWritableDatabase();
+        String selection = TaskSQL.COLUMN_ID + " LIKE ?";
+
+        String[] selectionArgs = { String.valueOf(id) };
+        int deletedRows = db.delete(TaskSQL.TABLE_NAME, selection, selectionArgs);
+        db.close();
+        return deletedRows;
+    }
+
     
-    public int updateProject(ProjectSQL employeeSQL){
-        ContentValues values=new ContentValues();
-        values.put(ProjectSQL.COLUMN_NAME,employeeSQL.name);
-        values.put(ProjectSQL.COLUMN_DES,employeeSQL.description);
-        values.put(ProjectSQL.COLUMN_START,employeeSQL.date_start);
-        values.put(ProjectSQL.COLUMN_END,employeeSQL.date_end);
-        values.put(ProjectSQL.COLUMN_STATE,employeeSQL.state);
 
-        String selection=ProjectSQL.COLUMN_ID +" LIKE ?";
-        String[] SelectionArgs= {String.valueOf(employeeSQL.id)};
-
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        int count =sqLiteDatabase.update(ProjectSQL.TABLE_NAME,values,selection,SelectionArgs);
-        sqLiteDatabase.close();
-        Log.d("rundebug",String.valueOf(count));
-        return count;
-
-
-    }
-    public int deleteProject(long id){
-        String selection = ProjectSQL.COLUMN_ID +" LIKE ?";
-        String[] SelectionArgs = {String.valueOf(id)};
-        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase();
-        int count = sqLiteDatabase.delete(ProjectSQL.TABLE_NAME,selection,SelectionArgs);
-        sqLiteDatabase.close();
-        return count;
-    }
 }

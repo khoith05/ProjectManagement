@@ -25,7 +25,7 @@ public class ProjectSQL implements Serializable {
                     COLUMN_DES+" TEXT,"+
                     COLUMN_START+" TEXT,"+
                     COLUMN_END+" TEXT,"+
-                    COLUMN_STATE+" BLOB )";
+                    COLUMN_STATE+" TEXT )";
     public ProjectSQL(){
     }
     public ProjectSQL(long id, String name, String phone, String email, String job, String address){

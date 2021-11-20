@@ -49,6 +49,7 @@ public class UserEdit extends AppCompatActivity {
         if (userdata.img!=null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(userdata.img, 0, userdata.img.length);
             avatar.setImageBitmap(bitmap);
+            avatarByte=userdata.img;
         }
         crossView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -124,10 +124,12 @@ public class EditEmployee extends AppCompatActivity {
             textInputEditText.setText(employeeSQL.address);
             textInputEditText=(TextInputEditText) findViewById(R.id.EmployeeSalary);
             textInputEditText.setText(employeeSQL.salary);
+            if(employeeSQL.img!=null){
+                Bitmap bitmap= BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
+                imageView.setImageBitmap(bitmap);
+                avatarByte=employeeSQL.img;
+            }
 
-            Bitmap bitmap= BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
-            imageView.setImageBitmap(bitmap);
-            avatarByte=employeeSQL.img;
 
             this.title="Chỉnh sửa nhân viên";
         }else{

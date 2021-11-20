@@ -1,6 +1,7 @@
 package com.example.android.projectmanagement.database;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class EmployeeSQL implements Serializable {
     public static final String TABLE_NAME="employee";
@@ -21,6 +22,8 @@ public class EmployeeSQL implements Serializable {
     public String address;
     public String salary;
     public byte[] img;
+    public List<ProjectSQL> worked;
+    public List<ProjectSQL> working;
 
     public static final String CREATE_TABLE=
             "CREATE TABLE "+ TABLE_NAME+" ("+
@@ -48,8 +51,20 @@ public class EmployeeSQL implements Serializable {
         return this.id;
 
     }
-    public EmployeeSQL getEmployeeInfo(){
-        return this;
+    public List<ProjectSQL> getWorked() {
+        return worked;
+    }
+
+    public List<ProjectSQL> getWorking() {
+        return working;
+    }
+
+    public void setWorked(List<ProjectSQL> worked) {
+        this.worked = worked;
+    }
+
+    public void setWorking(List<ProjectSQL> working) {
+        this.working = working;
     }
 
 }

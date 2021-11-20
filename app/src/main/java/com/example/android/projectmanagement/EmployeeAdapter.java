@@ -97,8 +97,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
                 });
             }
         });
-        Bitmap bitmap=BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
-        holder.img.setImageBitmap(bitmap);
+        if (employeeSQL.img!=null){
+            Bitmap bitmap=BitmapFactory.decodeByteArray(employeeSQL.img,0,employeeSQL.img.length);
+            holder.img.setImageBitmap(bitmap);
+        }
+
     }
 
     @Override

@@ -44,7 +44,7 @@ public class Project extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static final int EDIT_ACTIVITY=3;
+    private static final int EDIT_ACTIVITY=4;
     private ProjectAdapter employeeAdapter;
     private RecyclerView recyclerView;
     private List<ProjectSQL> employeeSQLlist;
@@ -94,10 +94,8 @@ public class Project extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                boolean edit=false;
-                Intent intent =new Intent(getActivity(), EditProject.class );
-                intent.putExtra("edit",edit);
-                startActivityForResult(intent,EDIT_ACTIVITY);
+                Intent intent=new Intent(getActivity(),EditProject.class);
+                startActivity(intent);
             }
         });
         // Inflate the layout for this fragment
