@@ -176,7 +176,6 @@ public class EditEmployee extends AppCompatActivity {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG,0,byteArrayOutputStream);
                     avatarByte=byteArrayOutputStream.toByteArray();
-                    Log.d("dfgdf","dfgdfgdf");
                 } catch (FileNotFoundException e){
                     e.printStackTrace();
                 }

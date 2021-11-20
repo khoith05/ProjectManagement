@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectManagement">
         <activity
+            android:name=".TaskInfo"
+            android:exported="false" />
+        <activity
             android:name=".EditTask"
             android:exported="false" />
         <activity

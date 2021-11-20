@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".EditTask">
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/Eiappbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/EditTaskToolbar"
+                android:id="@+id/InfoTaskToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/design_default_color_primary"
@@ -26,21 +26,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title=" "
                 app:titleTextColor="#ffff">
 
                 <TextView
-                    android:id="@+id/EditTaskTitle"
+                    android:id="@+id/InfoTaskTitle"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Chỉnh sửa Task"
+                    android:text="Thông tin task"
                     android:textColor="#ffffff" />
             </androidx.appcompat.widget.Toolbar>
 
             <ImageView
-                android:id="@+id/crossTask"
+                android:id="@+id/BackTaskInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:clickable="true"
@@ -50,22 +49,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/cross" />
-
-            <ImageView
-                android:id="@+id/checkTask"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginEnd="9dp"
-                android:clickable="true"
-                android:contentDescription="checkTask"
-                android:focusable="auto"
-                android:minWidth="48dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/EditTaskToolbar"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/check" />
-
+                app:srcCompat="@drawable/back" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
@@ -82,9 +66,10 @@
                 android:hint="Nhập tên task">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TaskNameinput"
+                    android:id="@+id/TaskInfoNameinput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,17 +80,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_height="wrap_content"
-                android:hint="Mô tả">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/TaskDesciptionTaskEdit"
+                    android:id="@+id/TaskDesciptionTaskInfo"
                     android:layout_width="match_parent"
-                    android:inputType="textMultiLine"
-                    android:lines="4"
-                    android:gravity="top"
                     android:layout_height="wrap_content"
-                    />
+                    android:enabled="false"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="4" />
 
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
@@ -135,7 +119,7 @@
                         android:hint="Ngày bắt đầu">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/startDateTask"
+                            android:id="@+id/startDateTaskInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clickable="false"
@@ -159,7 +143,7 @@
                         android:hint="Ngày kết thúc">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/endDateTask"
+                            android:id="@+id/endDateTaskInfo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:clickable="false"
@@ -183,21 +167,16 @@
                     android:layout_height="wrap_content"
                     android:textColor="	#706767"
                     android:text="Thành viên"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipTask"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="Thêm nhân viên" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/EmployeeTaskRecycleView"
+                android:id="@+id/TaskInfoRecycleView"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:clickable="false"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>

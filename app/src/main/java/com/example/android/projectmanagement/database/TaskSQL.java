@@ -2,6 +2,7 @@ package com.example.android.projectmanagement.database;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,10 @@ public class TaskSQL {
     public static final String COLUMN_DESCRIPTION="desciption";
     public static final String COLUMN_STATE="state";
     public static final String COLUMN_PROJECTID="projectid";
+    public static final String late="late";
+    public static final String processing="processing";
+    public static final String complete="complete";
+    public static final String notstart="notstart";
 
     public static final String CREATE_TABLE=
             "CREATE TABLE "+TABLE_NAME+ "("+
@@ -45,8 +50,11 @@ public class TaskSQL {
         this.desciption = desciption;
         this.state=state;
         this.projectid = projectid;
+        this.choose=new ArrayList<>();
     }
-
+    public TaskSQL(){
+        this.choose=new ArrayList<>();
+    }
     public void setChoose(List<EmployeeSQL> choose) {
         this.choose = choose;
     }
@@ -60,6 +68,9 @@ public class TaskSQL {
         List<EmployeeSQL> employeeSQLList=new LinkedList<>();
         DatabaseHelper db= new DatabaseHelper(context);
         employeeSQLList.addAll(db.getAlLEmployee());
+        if (employeeSQLList.isEmpty() || this.choose.isEmpty()){
+            return employeeSQLList;
+        }
         Iterator itr=employeeSQLList.iterator();
         while (itr.hasNext()){
             EmployeeSQL employeeSQL=(EmployeeSQL) itr.next();
@@ -67,7 +78,7 @@ public class TaskSQL {
             while (itr2.hasNext()){
                 EmployeeSQL employeeSQL1=(EmployeeSQL) itr2.next();
                 if(employeeSQL1.id==employeeSQL.id){
-                    employeeSQLList.remove(employeeSQL);
+                    itr.remove();
                 }
             }
         }

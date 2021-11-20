@@ -318,14 +318,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             long id = cursor.getLong(
                     cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_ID));
             String name=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String start=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String end=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String des=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String state=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String start=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_START));
+            String end=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_END));
+            String des=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_DESCRIPTION));
+            String state=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_STATE));
             Long prjectid= cursor.getLong(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_PROJECTID));
             taskSQLList.add(new TaskSQL(id,name,start,end,des,state,prjectid));
         }
         cursor.close();
+        for(int i=0;i<taskSQLList.size();i++){
+            getAllEmployeeBeLongToTask(taskSQLList.get(i).id);
+            taskSQLList.get(i).choose=getAllEmployeeBeLongToTask(taskSQLList.get(i).id);
+        }
         return taskSQLList;
     }
 
@@ -360,15 +364,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             long itemid = cursor.getLong(
                     cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_ID));
             String name=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String start=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String end=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String des=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
-            String state=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_NAME));
+            String start=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_START));
+            String end=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_END));
+            String des=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_DESCRIPTION));
+            String state=cursor.getString(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_STATE));
             Long prjectid= cursor.getLong(cursor.getColumnIndexOrThrow(TaskSQL.COLUMN_PROJECTID));
             taskSQLList.add(new TaskSQL(itemid,name,start,end,des,state,prjectid));
         }
         cursor.close();
-        return taskSQLList.get(0);
+        TaskSQL taskSQL=taskSQLList.get(0);
+        getAllEmployeeBeLongToTask(taskSQL.id);
+        taskSQL.choose=getAllEmployeeBeLongToTask(taskSQL.id);
+        return taskSQL;
     }
 
     public int updateTask(TaskSQL taskSQL){
@@ -391,10 +398,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 selection,
                 selectionArgs);
         db.close();
+        updateBelongTask(taskSQL.id,taskSQL.choose);
         return count;
     }
 
-    public int insertTask(String name,String start,String end,String des,String state,long projectid){
+    public int insertTask(String name,String start,String end,String des,String state,long projectid,List<EmployeeSQL> choose){
         SQLiteDatabase db =this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -406,17 +414,85 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(TaskSQL.COLUMN_PROJECTID, projectid);
 
         long newRowId = db.insert(TaskSQL.TABLE_NAME, null, values);
+
         db.close();
+        insertBelongtask(newRowId,choose);
         return (int)newRowId;
     }
     public int deleteTask(long id){
         SQLiteDatabase db =this.getWritableDatabase();
         String selection = TaskSQL.COLUMN_ID + " LIKE ?";
-
         String[] selectionArgs = { String.valueOf(id) };
         int deletedRows = db.delete(TaskSQL.TABLE_NAME, selection, selectionArgs);
         db.close();
+        deleteBelongTask(id);
         return deletedRows;
+    }
+    public int deleteBelongTask(long id){
+        SQLiteDatabase db =this.getWritableDatabase();
+        String selection=BelongToSQL.COLUMN_TASKID + " LIKE ? ";
+        String[] selectionArgs = { String.valueOf(id) };
+        int deletedRows=db.delete(BelongToSQL.TABLE_NAME,selection,selectionArgs);
+        db.close();
+        return deletedRows;
+
+    }
+    public void insertBelongtask(long id, List<EmployeeSQL> choose){
+        SQLiteDatabase db =this.getWritableDatabase();
+        if(choose!=null &&choose.size()>0){
+            for (int i =0; i<choose.size();i++){
+                ContentValues values1= new ContentValues();
+                values1.put(BelongToSQL.COLUMN_EMPLOYEEID,choose.get(i).id);
+                values1.put(BelongToSQL.COLUMN_TASKID,id);
+                db.insert(BelongToSQL.TABLE_NAME,null,values1);
+            }
+        }
+        db.close();
+    }
+    public void updateBelongTask(long id, List<EmployeeSQL> choose){
+        deleteBelongTask(id);
+        insertBelongtask(id,choose);
+    }
+    public long[] getAllBelongTask(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                BelongToSQL.COLUMN_EMPLOYEEID,
+                BelongToSQL.COLUMN_TASKID
+        };
+
+        String selection = BelongToSQL.COLUMN_TASKID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        String sortOrder =
+                BelongToSQL.COLUMN_EMPLOYEEID + " ASC";
+
+        Cursor cursor = db.query(
+                BelongToSQL.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+        long[] idlist=new long[cursor.getCount()];
+        int i=0;
+        while(cursor.moveToNext()) {
+            idlist[i]= cursor.getLong(
+                    cursor.getColumnIndexOrThrow(BelongToSQL.COLUMN_EMPLOYEEID));
+            i++;
+        }
+        cursor.close();
+        return idlist;
+    }
+    public List<EmployeeSQL> getAllEmployeeBeLongToTask(long id){
+        long[] idlist=getAllBelongTask(id);
+        List<EmployeeSQL> employeeSQLList=new ArrayList<>();
+        for(int i=0;i<idlist.length;i++){
+            employeeSQLList.add(getEmpoloyee(idlist[i]));
+        }
+        return employeeSQLList;
     }
 
     

@@ -61,6 +61,13 @@ public class Project_info extends AppCompatActivity {
         });
         taskFragment=TaskFragment.newInstance(projecid);
         getSupportFragmentManager().beginTransaction().replace(R.id.Projectcontainer, taskFragment).commit();
+        ImageView back=findViewById(R.id.backProjectInfo);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
     }
