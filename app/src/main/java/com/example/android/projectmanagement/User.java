@@ -1,5 +1,8 @@
 package com.example.android.projectmanagement;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.android.projectmanagement.database.DatabaseHelper;
+import com.example.android.projectmanagement.database.UserSQL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,15 +23,12 @@ import android.view.ViewGroup;
  */
 public class User extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    TextView nameView;
+    TextView phoneView;
+    TextView emailView;
+    TextView addressView;
+    ImageView avatar;
     public User() {
         // Required empty public constructor
     }
@@ -40,8 +45,6 @@ public class User extends Fragment {
     public static User newInstance(String param1, String param2) {
         User fragment = new User();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,17 +52,55 @@ public class User extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle("User");
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view= inflater.inflate(R.layout.fragment_user, container, false);
+        ImageView imageView= view.findViewById(R.id.editUser);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),UserEdit.class);
+                startActivity(intent);
+            }
+        });
+
+        DatabaseHelper user = new DatabaseHelper(getActivity());
+        UserSQL usersql = user.getUser();
+        nameView= view.findViewById(R.id.UserName);
+        nameView.setText(usersql.name);
+        phoneView = view.findViewById(R.id.UserPhoneNumber);
+        phoneView.setText(usersql.phone);
+        emailView = view.findViewById(R.id.UserEmail);
+        emailView.setText(usersql.email);
+        addressView = view.findViewById(R.id.UserAddress);
+        addressView.setText(usersql.address);
+        avatar= (ImageView) view.findViewById(R.id.UserAvatar);
+        if (usersql.img!=null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(usersql.img,0,usersql.img.length);
+            avatar.setImageBitmap(bitmap);
+        }
+
+        return view;
+
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        DatabaseHelper user = new DatabaseHelper(getActivity());
+        UserSQL usersql = user.getUser();
+        nameView.setText(usersql.name);
+        phoneView.setText(usersql.phone);
+        emailView.setText(usersql.email);
+        addressView.setText(usersql.address);
+        if (usersql.img!=null) {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(usersql.img,0,usersql.img.length);
+        avatar.setImageBitmap(bitmap);
+        }
+    }
+
 }

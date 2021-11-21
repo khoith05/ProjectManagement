@@ -2,6 +2,9 @@ package com.example.android.projectmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,8 +15,10 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import java.io.*;
+import java.text.DateFormat;
 
 public class MainActivity extends AppCompatActivity {
     Project project = new Project();
@@ -26,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.user);
 
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 
     }
 
