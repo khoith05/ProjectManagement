@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -31,6 +33,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,46 +92,65 @@ public class EditTask extends AppCompatActivity {
         context=this;
         ShowrecyclerView=findViewById(R.id.EmployeeTaskRecycleView);
         startInputLayout.setStartIconOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-                materialDateBuilder.setTitleText("Chọn ngày bắt đầu");
-                MaterialDatePicker materialDatePicker = materialDateBuilder.build();
-                materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
-                materialDatePicker.addOnPositiveButtonClickListener(
-                        new MaterialPickerOnPositiveButtonClickListener() {
-                            @Override
-                            public void onPositiveButtonClick(Object selection) {
-                                try {
-                                    String sdate =DateHelper.DateConvert(materialDatePicker.getHeaderText());
-                                    startDate.setText(sdate );
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
+//                MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+//                materialDateBuilder.setTitleText("Chọn ngày bắt đầu");
+//                MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+//                materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+//                materialDatePicker.addOnPositiveButtonClickListener(
+//                        new MaterialPickerOnPositiveButtonClickListener() {
+//                            @Override
+//                            public void onPositiveButtonClick(Object selection) {
+//                                try {
+//                                    String sdate =DateHelper.DateConvert(materialDatePicker.getHeaderText());
+//                                    startDate.setText(sdate );
+//                                } catch (ParseException e) {
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }
+//                        });
+                DatePickerDialog datePickerDialog=new DatePickerDialog(context);
+                datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        startDate.setText(DateHelper.IntToDate(dayOfMonth,month,year));
+                    }
+                });
+                datePickerDialog.show();
 
-                            }
-                        });
             }
         });
         endInputLayout.setStartIconOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-                materialDateBuilder.setTitleText("Chọn ngày kết thúc");
-                MaterialDatePicker materialDatePicker = materialDateBuilder.build();
-                materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
-                materialDatePicker.addOnPositiveButtonClickListener(
-                        new MaterialPickerOnPositiveButtonClickListener() {
-                            @Override
-                            public void onPositiveButtonClick(Object selection) {
-                                try {
-                                    String edate =DateHelper.DateConvert(materialDatePicker.getHeaderText());
-                                    endDate.setText( edate);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
+//                MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+//                materialDateBuilder.setTitleText("Chọn ngày kết thúc");
+//                MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+//                materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+//                materialDatePicker.addOnPositiveButtonClickListener(
+//                        new MaterialPickerOnPositiveButtonClickListener() {
+//                            @Override
+//                            public void onPositiveButtonClick(Object selection) {
+//                                try {
+//                                    String edate =DateHelper.DateConvert(materialDatePicker.getHeaderText());
+//                                    endDate.setText( edate);
+//                                } catch (ParseException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
+                DatePickerDialog datePickerDialog=new DatePickerDialog(context);
+                datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        endDate.setText(DateHelper.IntToDate(dayOfMonth,month,year));
+                    }
+                });
+                datePickerDialog.show();
             }
         });
 
