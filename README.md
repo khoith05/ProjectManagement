@@ -1,2 +1,2 @@
 # ProjectManagement
-PhuocLoc: Splash, Onboarding, Login
+PhuocLoc: Splash, Onboarding, Login, Analytics, Summary
